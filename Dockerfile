@@ -19,7 +19,7 @@ RUN apt-get update && apt-get upgrade -y
 RUN mkdir -p /opt/bambuStudio \
     && cd /opt/bambuStudio \
     && add-apt-repository universe \
-    && apt install libfuse2 -y \
+    && apt install libfuse2 libwebkit2gtk-4.0-dev -y \
     && wget $(curl -L -s https://api.github.com/repos/bambulab/BambuStudio/releases/latest | grep -o -E "https://(.*)Bambu_Studio_linux_ubuntu(.*).AppImage") \
     && chmod +x *.AppImage \
     && ./*.AppImage --appimage-extract \
