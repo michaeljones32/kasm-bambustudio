@@ -28,17 +28,19 @@ RUN mkdir -p /opt/bambuStudio \
     && rm -rf squashfs-root/ \
     && chown 1000:1000 -R /opt/bambuStudio
 
+# Set this so that Bambu Studio doesn't complain about
+# the CA cert path on every startup
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-RUN echo "/usr/bin/desktop_ready && /opt/bambuStudio/AppRun &" > $STARTUPDIR/custom_startup.sh \
-&& chmod +x $STARTUPDIR/custom_startup.sh
+# RUN echo "/usr/bin/desktop_ready && /opt/bambuStudio/AppRun &" > $STARTUPDIR/custom_startup.sh \
+# && chmod +x $STARTUPDIR/custom_startup.sh
 
 # COPY BambuStudio/install_bambuStudio.sh $INST_SCRIPTS/bambuStudio/install_bambuStudio.sh
 # RUN bash $INST_SCRIPTS/bambuStudio/install_bambuStudio.sh  && rm -rf $INST_SCRIPTS/bambuStudio/
 
-# COPY BambuStudio/custom_startup.sh $STARTUPDIR/custom_startup.sh
-# RUN chmod +x $STARTUPDIR/custom_startup.sh
-# RUN chmod 755 $STARTUPDIR/custom_startup.sh
+COPY BambuStudio/custom_startup.sh $STARTUPDIR/custom_startup.sh
+RUN chmod +x $STARTUPDIR/custom_startup.sh
+RUN chmod 755 $STARTUPDIR/custom_startup.sh
 
 
 # # Update the desktop environment to be optimized for a single application

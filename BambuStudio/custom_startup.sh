@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -ex
-START_COMMAND="/opt/bambuStudio/squashfs-root/AppRun"
+START_COMMAND="/opt/bambuStudio/AppRun"
 PGREP="bambustu_main"
 export MAXIMIZE="true"
 export MAXIMIZE_NAME="bambustu_main"
