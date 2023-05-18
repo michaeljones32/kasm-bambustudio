@@ -23,6 +23,9 @@ RUN mkdir -p /opt/bambuStudio \
     && wget $(curl -L -s https://api.github.com/repos/bambulab/BambuStudio/releases/latest | grep -o -E "https://(.*)Bambu_Studio_linux_ubuntu(.*).AppImage") \
     && chmod +x *.AppImage \
     && ./*.AppImage --appimage-extract \
+    && rm *.AppImage \
+    && mv squashfs-root/* . \
+    && rmdir squashfs-root \
     && chown 1000:1000 -R /opt/bambuStudio
 
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
