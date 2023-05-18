@@ -25,6 +25,10 @@ RUN mkdir -p /opt/bambuStudio \
     && ./*.AppImage --appimage-extract \
     && chown 1000:1000 -R /opt/bambuStudio
 
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+
+RUN echo "/usr/bin/desktop_ready && /opt/bambuStudio/AppRun &" > $STARTUPDIR/custom_startup.sh \
+&& chmod +x $STARTUPDIR/custom_startup.sh
 
 # COPY BambuStudio/install_bambuStudio.sh $INST_SCRIPTS/bambuStudio/install_bambuStudio.sh
 # RUN bash $INST_SCRIPTS/bambuStudio/install_bambuStudio.sh  && rm -rf $INST_SCRIPTS/bambuStudio/
