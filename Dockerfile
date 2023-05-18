@@ -10,11 +10,6 @@ WORKDIR $HOME
 
 
 RUN apt-get update && apt-get upgrade -y 
-# && apt-get install -y \
-#     fuse \
-#     libfuse2 \
-#     && rm -rf /var/lib/apt/lists/*
-
 
 RUN mkdir -p /opt/bambuStudio \
     && cd /opt/bambuStudio \
@@ -32,21 +27,15 @@ RUN mkdir -p /opt/bambuStudio \
 # the CA cert path on every startup
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-# RUN echo "/usr/bin/desktop_ready && /opt/bambuStudio/AppRun &" > $STARTUPDIR/custom_startup.sh \
-# && chmod +x $STARTUPDIR/custom_startup.sh
-
-# COPY BambuStudio/install_bambuStudio.sh $INST_SCRIPTS/bambuStudio/install_bambuStudio.sh
-# RUN bash $INST_SCRIPTS/bambuStudio/install_bambuStudio.sh  && rm -rf $INST_SCRIPTS/bambuStudio/
-
 COPY BambuStudio/custom_startup.sh $STARTUPDIR/custom_startup.sh
 RUN chmod +x $STARTUPDIR/custom_startup.sh
 RUN chmod 755 $STARTUPDIR/custom_startup.sh
 
 
-# # Update the desktop environment to be optimized for a single application
-# RUN cp $HOME/.config/xfce4/xfconf/single-application-xfce-perchannel-xml/* $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/
-# RUN cp /usr/share/extra/backgrounds/bg_kasm.png /usr/share/extra/backgrounds/bg_default.png
-# RUN apt-get remove -y xfce4-panel
+# Update the desktop environment to be optimized for a single application
+RUN cp $HOME/.config/xfce4/xfconf/single-application-xfce-perchannel-xml/* $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/
+RUN cp /usr/share/extra/backgrounds/bg_kasm.png /usr/share/extra/backgrounds/bg_default.png
+RUN apt-get remove -y xfce4-panel
 
 ######### End Customizations ###########
 
