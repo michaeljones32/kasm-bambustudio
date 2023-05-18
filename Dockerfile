@@ -25,7 +25,7 @@ RUN mkdir -p /opt/bambuStudio \
     && ./*.AppImage --appimage-extract \
     && rm *.AppImage \
     && mv squashfs-root/* . \
-    && rmdir squashfs-root \
+    && rm -rf squashfs-root/ \
     && chown 1000:1000 -R /opt/bambuStudio
 
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
