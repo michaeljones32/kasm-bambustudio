@@ -18,6 +18,7 @@ RUN mkdir -p /opt/bambuStudio \
         libfuse2 \
         libwebkit2gtk-4.0-dev \
         gstreamer1.0-libav \
+        gstreamer1.0-plugins-bad \
     && wget $(curl -L -s https://api.github.com/repos/bambulab/BambuStudio/releases/latest | grep -o -E "https://(.*)Bambu_Studio_linux_ubuntu(.*).AppImage") \
     && chmod +x *.AppImage \
     && ./*.AppImage --appimage-extract \
