@@ -16,18 +16,28 @@ RUN apt-get update && apt-get upgrade -y
 #     && rm -rf /var/lib/apt/lists/*
 
 
-COPY BambuStudio/install_bambuStudio.sh $INST_SCRIPTS/bambuStudio/install_bambuStudio.sh
-RUN bash $INST_SCRIPTS/bambuStudio/install_bambuStudio.sh  && rm -rf $INST_SCRIPTS/bambuStudio/
+RUN mkdir -p /opt/bambuStudio \
+    && cd /opt/bambuStudio \
+    && add-apt-repository universe \
+    && apt install libfuse2 -y \
+    && wget $(curl -L -s https://api.github.com/repos/bambulab/BambuStudio/releases/latest | grep -o -E "https://(.*)Bambu_Studio_linux_ubuntu(.*).AppImage") \
+    && chmod +x *.AppImage \
+    && ./*.AppImage --appimage-extract \
+    && chown 1000:1000 -R /opt/bambuStudio
 
-COPY BambuStudio/custom_startup.sh $STARTUPDIR/custom_startup.sh
-RUN chmod +x $STARTUPDIR/custom_startup.sh
-RUN chmod 755 $STARTUPDIR/custom_startup.sh
+
+# COPY BambuStudio/install_bambuStudio.sh $INST_SCRIPTS/bambuStudio/install_bambuStudio.sh
+# RUN bash $INST_SCRIPTS/bambuStudio/install_bambuStudio.sh  && rm -rf $INST_SCRIPTS/bambuStudio/
+
+# COPY BambuStudio/custom_startup.sh $STARTUPDIR/custom_startup.sh
+# RUN chmod +x $STARTUPDIR/custom_startup.sh
+# RUN chmod 755 $STARTUPDIR/custom_startup.sh
 
 
-# Update the desktop environment to be optimized for a single application
-RUN cp $HOME/.config/xfce4/xfconf/single-application-xfce-perchannel-xml/* $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/
-RUN cp /usr/share/extra/backgrounds/bg_kasm.png /usr/share/extra/backgrounds/bg_default.png
-RUN apt-get remove -y xfce4-panel
+# # Update the desktop environment to be optimized for a single application
+# RUN cp $HOME/.config/xfce4/xfconf/single-application-xfce-perchannel-xml/* $HOME/.config/xfce4/xfconf/xfce-perchannel-xml/
+# RUN cp /usr/share/extra/backgrounds/bg_kasm.png /usr/share/extra/backgrounds/bg_default.png
+# RUN apt-get remove -y xfce4-panel
 
 ######### End Customizations ###########
 
